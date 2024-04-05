@@ -1,0 +1,65 @@
+menu = """ 
+
+[d] Depositar
+[l] Levantar 
+[e] Extrato
+[s] Sair
+
+=> """
+
+saldo = 0
+limite = 10000
+extrato = ""
+numero_levantamentos = 0
+LIMITE_LEVANTAMENTOS = 3
+
+
+while True:
+
+    opcao = input(menu)
+
+    if opcao == 'd':
+        valor = float(input('Informa o valor a depositar: '))
+        if valor > 0:
+            saldo += valor
+            extrato += f"Foi efectuado o deposito no valor de: AOA {valor:.2f}\n"
+            print(f'Saldo actual: AOA {saldo:.2f}')
+        else: 
+            print('Valor de deposito invalida. Tente Novamente!')
+    
+    elif opcao == 'l':
+        valor = float(input('Informa o valor a levantar: '))
+
+        excedeu_saldo = valor > saldo
+        excedeu_limite = valor > limite
+        excedeu_levantamento = numero_levantamentos >= LIMITE_LEVANTAMENTOS
+
+        if excedeu_saldo:
+            print('Operacao falhou: Seu saldo insufuciente')
+
+        elif excedeu_limite:
+            print('Operacao falhou: Limite diario excedido')
+
+        elif excedeu_levantamento:
+            print('Operacao falhou: Limite de levantamento excedido')
+        
+        elif valor > 0:
+            saldo -= valor
+            extrato += f'Levantamento: AOA {valor:.2f}\n'
+            numero_levantamentos += 1
+            print(f'Saldo actual: AOA {saldo:.2f}')
+
+        else:
+            print('Operacao Falhou: O valor informado e invalido.')
+
+    elif opcao == 'e':
+        print('\n==============EXTRATO========================')
+        print('Sem movimentacoes.' if not extrato else extrato)
+        print(f'\nSaldo: AOA {saldo:.2f}')
+        print('================================================')
+
+    elif opcao == 's':
+        break
+
+    else:
+        print('Operacao Invalida, seleccione outra desejada')
